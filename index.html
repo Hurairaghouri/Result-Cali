@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+            font-size: 50px;
+            color: #000;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Result Calculator</h1>
+    <div>
+        <label for="bgColor">Select Background Color:</label>
+        <input type="color" id="bgColor" value="#ffffff" onchange="changeBackgroundColor()">
+    </div>
+    <table>
+        <tr>
+            <th>Subjects</th>
+            <th>Total Marks</th>
+            <th>Obtained Marks</th>
+        </tr>
+        <tr>
+            <td>Physics</td>
+            <td>85</td>
+            <td><input type="number" id="phy" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>Chemistry</td>
+            <td>85</td>
+            <td><input type="number" id="che" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>Biology</td>
+            <td>85</td>
+            <td><input type="number" id="bio" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>English</td>
+            <td>100</td>
+            <td><input type="number" id="eng" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>Urdu</td>
+            <td>100</td>
+            <td><input type="number" id="urdu" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>Islamiyat</td>
+            <td>50</td>
+            <td><input type="number" id="islamiyat" placeholder="Enter Marks" /></td>
+        </tr>
+        <tr>
+            <td>Tajweedul Quran</td>
+            <td>50</td>
+            <td><input type="number" id="tajweed" placeholder="Enter Marks" /></td>
+        </tr>
+    </table>
+
+    <input type="text" id="studentName" placeholder="Student Name" />
+    <input type="text" id="rollNumber" placeholder="Roll Number" />
+    <button onclick="calculateResult()">Calculate Result</button>
+
+    <script>
+        function changeBackgroundColor() {
+            const color = document.getElementById("bgColor").value;
+            document.body.style.backgroundColor = color;
+        }
+
+        function getGrade(percentage) {
+            if (percentage >= 90) return 'A+';
+            if (percentage >= 80) return 'A';
+            if (percentage >= 70) return 'B';
+            if (percentage >= 60) return 'C';
+            if (percentage >= 50) return 'D';
+            return 'F';
+        }
+
+        function getRemarks(grade) {
+            switch (grade) {
+                case 'A+': return 'Excellent';
+                case 'A': return 'Very Good';
+                case 'B': return 'Good';
+                case 'C': return 'Need Improvement';
+                case 'D': return 'Poor';
+                default: return 'Need Improvement';
+            }
+        }
+
+        function calculateResult() {
+            const name = document.getElementById("studentName").value;
+            const rollNumber = document.getElementById("rollNumber").value;
+
+            const phy = parseFloat(document.getElementById("phy").value) || 0;
+            const che = parseFloat(document.getElementById("che").value) || 0;
+            const bio = parseFloat(document.getElementById("bio").value) || 0;
+            const eng = parseFloat(document.getElementById("eng").value) || 0;
+            const urdu = parseFloat(document.getElementById("urdu").value) || 0;
+            const islamiyat = parseFloat(document.getElementById("islamiyat").value) || 0;
+            const tajweed = parseFloat(document.getElementById("tajweed").value) || 0;
+
+            const totalMarks = 85 + 85 + 85 + 100 + 100 + 50 + 50; // Total Marks
+            const obtainedMarks = phy + che + bio + eng + urdu + islamiyat + tajweed; // Obtained Marks
+            const percentage = (obtainedMarks / totalMarks) * 100; // Percentage
+
+            const resultWindow = window.open('', '', 'width=800,height=600');
+            resultWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Result Summary</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                margin: 20px;
+                                padding: 20px;
+                                background-color: ${document.getElementById('bgColor').value};
+                            }
+                            h1 {
+                                text-align: center;
+                                color: #333;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin: 20px 0;
+                            }
+                            th, td {
+                                padding: 10px;
+                                text-align: center;
+                                border: 1px solid #ddd;
+                            }
+                            .watermark {
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                opacity: 0.1;
+                                font-size: 50px;
+                                color: #000;
+                                pointer-events: none;
+                                z-index: -1;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="watermark">RESULT</div>
+                        <h1>Result Summary</h1>
+                        <p><strong>Name:</strong> ${name}</p>
+                        <p><strong>Roll Number:</strong> ${rollNumber}</p>
+                        <p><strong>Total Marks:</strong> ${totalMarks}</p>
+                        <p><strong>Obtained Marks:</strong> ${obtainedMarks}</p>
+                        <p><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
+                        <p><strong>Grade:</strong> ${getGrade(percentage)}</p>
+                        <p><strong>Performance:</strong> ${getRemarks(getGrade(percentage))}</p>
+                        <table>
+                            <tr>
+                                <th>No</th>
+                                <th>Subjects</th>
+                                <th>Total Marks</th>
+                                <th>Obtained Marks</th>
+                                <th>Percentage</th>
+                                <th>Grade</th>
+                            </tr>
+                            <tr><td>1</td><td>Physics</td><td>85</td><td>${phy}</td><td>${((phy / 85) * 100).toFixed(2)}%</td><td>${getGrade((phy / 85) * 100)}</td></tr>
+                            <tr><td>2</td><td>Chemistry</td><td>85</td><td>${che}</td><td>${((che / 85) * 100).toFixed(2)}%</td><td>${getGrade((che / 85) * 100)}</td></tr>
+                            <tr><td>3</td><td>Biology</td><td>85</td><td>${bio}</td><td>${((bio / 85) * 100).toFixed(2)}%</td><td>${getGrade((bio / 85) * 100)}</td></tr>
+                            <tr><td>4</td><td>English</td><td>100</td><td>${eng}</td><td>${((eng / 100) * 100).toFixed(2)}%</td><td>${getGrade((eng / 100) * 100)}</td></tr>
+                            <tr><td>5</td><td>Urdu</td><td>100</td><td>${urdu}</td><td>${((urdu / 100) * 100).toFixed(2)}%</td><td>${getGrade((urdu / 100) * 100)}</td></tr>
+                            <tr><td>6</td><td>Islamiyat</td><td>50</td><td>${islamiyat}</td><td>${((islamiyat / 50) * 100).toFixed(2)}%</td><td>${getGrade((islamiyat / 50) * 100)}</td></tr>
+                            <tr><td>7</td><td>Tajweedul Quran</td><td>50</td><td>${tajweed}</td><td>${((tajweed / 50) * 100).toFixed(2)}%</td><td>${getGrade((tajweed / 50) * 100)}</td></tr>
+                        </table>
+                    </body>
+                </html>
+            `);
+            resultWindow.document.close();
+            resultWindow.focus();
+        }
+    </script>
+</body>
+</html>
